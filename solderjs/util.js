@@ -1,7 +1,12 @@
 const fs = require('fs'),
     path = require('path'),
-    config = require('./config'),
     md5File = require('md5-file');
+var config = null;
+try {
+    config = require('./dev-config')
+} catch (e) {
+    config = require('./config');
+}
 function exist(...list) {
     return fs.existsSync(getpath(list));
 }

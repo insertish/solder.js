@@ -1,6 +1,11 @@
-const config = require('./config'),
-    { create_directories, getpath, exist, loadfile, md5hash } = require('./util'),
+const { create_directories, getpath, exist, loadfile, md5hash } = require('./util'),
     fs = require('fs');
+var config = null;
+try {
+    config = require('./dev-config')
+} catch (e) {
+    config = require('./config');
+}
 
 create_directories(['','modpacks','mods']);
 
