@@ -5,6 +5,8 @@ Created by [Paul](https://github.com/mcrocks999) and with help from [Martin](htt
 
 Don't believe it works? [Check out the test modpack!](https://www.technicpack.net/modpack/solderjsmodpack.1113658)
 
+Demo API Endpoint: [https://xyon.k.vu/api/](https://xyon.k.vu/api/)
+
 What is Solder?
 --------------
 
