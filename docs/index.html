@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>solder.js</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" integrity="sha256-HEtF7HLJZSC3Le1HcsWbz1hDYFPZCqDhZa9QsCgVUdw=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+            li {
+                list-style: inside;
+            }
+        </style>
+    </head>
+    <body>
+        <section class="hero is-info is-fullheight">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item">
+                                solder.js
+                            </a>
+                            <span class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                <a href="#what-is-solder" class="navbar-item">
+                                    What is solder.js?
+                                </a>
+                                <a href="/docs" class="navbar-item">
+                                    Documentation
+                                </a>
+                                <a href="#download" class="navbar-item">
+                                    Download
+                                </a>
+                                <a href="https://github.com/mcrocks999/solder.js/issues" class="navbar-item">
+                                    Issue Tracker
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <h1 class="title is-1">
+                        solder.js
+                    </h1>
+                    <h2 class="subtitle">
+                        <i>Supercharge your modpack.</i>
+                    </h2>
+                    <h3 class="subtitle">
+                        Fast and easy alternative to TechnicSolder written in Javascript.
+                    </h3>
+                    <a href="/docs" class="button is-light is-outlined">
+                        <span class="icon">
+                            <i class="fa fa-book"></i>
+                        </span>
+                        <span>Documentation</span>
+                    </a>
+                    <a href="https://github.com/mcrocks999/solder.js" class="button is-light is-outlined">
+                        <span class="icon">
+                            <i class="fa fa-github"></i>
+                        </span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#download" class="button is-light is-outlined">
+                        <span class="icon">
+                            <i class="fa fa-download"></i>
+                        </span>
+                        <span>Download</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section id="what-is-solder" class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <h3 class="subtitle is-3">What is Solder?</h3>
+                        <p>
+                            TechnicSolder is an API that sits between a modpack repository and the launcher. It allows you to easily manage multiple modpacks in one single location.<br><br>
+                            Using Solder also means your packs will download each mod individually.
+                            This means the launcher can check MD5's against each version of a mod and if it hasn't changed, use the cached version of the mod instead.
+                            What does this mean? Small incremental updates to your modpack doesn't mean redownloading the whole thing every time!
+                        </p>
+                    </div>
+                    <div class="column">
+                        <h3 class="subtitle is-3">Why solder.js?</h3>
+                        <p>
+                            solder.js is a faster and easier to setup alternative to the official TechnicSolder,
+                            it offers the same capabilities (except for a web interface) and is as fast as the official TechnicSolder.<br><br>
+                            While TechnicSolder is described to be <i>not easy</i>, solder.js is designed for quick deployment with it only requiring Node, NPM and optionally Git.<br><br>
+                            solder.js uses a static approach to hosting modpacks meaning no need for any databases!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <div class="columns">
+                    <div class="column">
+                        <div class="box">
+                            <h5 class="title is-5">Requirements</h5>
+                            <ul>
+                                <li>NodeJS <small>(6.11.4 or above)</small></li>
+                                <li>NPM</li>
+                                <li>Git <small>[optional]</small></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="box" id="quick-start">
+                            <h5 class="title is-5">Quick Start</h5>
+                            <pre>git clone https://github.com/mcrocks999/solder.js.git
+cd solder.js
+npm i
+node ./app.js</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="download" class="hero is-success">
+            <div class="hero-body">
+                <h3 class="subtitle is-2">Get started with solder.js</h3>
+                <h4 class="subtitle is-4">The fastest way to get started is currently through GitHub</h4>
+                <a href="https://github.com/mcrocks999/solder.js" class="button is-light is-outlined">
+                    <span class="icon">
+                        <i class="fa fa-github"></i>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+                <a href="#quick-start" class="button is-light is-outlined">
+                    <span class="icon">
+                        <i class="fa fa-download"></i>
+                    </span>
+                    <span>Quick Start</span>
+                </a>
+            </div>
+        </section>
+        <footer class="footer">
+            <div class="container">
+                <div class="content has-text-centered">
+                    <p>
+                        <a href="https://github.com/mcrocks999/solder.js">GitHub</a> <b>&middot;</b> solder.js by <a href="https://paul.uk.to">Paul</a> <b>&middot;</b> Bulma by <a href="http://jgthms.com">Jeremy Thomas</a>. <b>&middot;</b> <a href="http://solder.io">TechnicSolder</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </body>
+    <script src="js/smoothscroll.js"></script>
+    <script>var scroll = new SmoothScroll('a[href*="#"]');</script>
+</html>
