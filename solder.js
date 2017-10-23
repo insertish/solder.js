@@ -51,8 +51,7 @@ app.get('/api/verify/:token', (req, res) => {
 });
 
 app.get('/api/modpack', (req, res) => {
-    if (req.query.include && req.query.include=='full') return promise(res, solder.modpack_full());
-    promise(res, solder.modpack({}));
+    promise(res, solder.modpack({include: req.query.include}));
 });
 app.get('/api/modpack/:slug', (req, res) => {
     promise(res, solder.modpack({slug: req.params.slug}));
