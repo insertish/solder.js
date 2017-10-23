@@ -10,7 +10,12 @@ try {
 create_directories(['','modpacks','mods']);
 
 function mod(name) {
-    var m = loadfile('mods', name, 'mod.json');
+    try {
+        var m = loadfile('mods', name, 'mod.json');
+    } catch(e) {
+      console.error(`mod.json does not exist for ${name}!`);
+        return { error: `mod.json does not exist for ${name}!` };
+    }
     var v = [];
     if (fs.existsSync(getpath('mods', name, 'versions')))
         fs.readdirSync(getpath('mods', name, 'versions')).forEach(x => {
@@ -29,7 +34,12 @@ function ver(name, version, ext) {
 }
 
 function modpack(slug) {
-    var m = loadfile('modpacks', slug, 'modpack.json');
+    try {
+        var m = loadfile('modpacks', slug, 'modpack.json');
+    } catch(e) {
+        console.log(`modpack.json does not exist for ${slug}!`);
+        return { error: `modpack.json does not exist for ${slug}!` };
+    }
     var b = [];
     if (fs.existsSync(getpath('modpacks', slug, 'builds')))
         fs.readdirSync(getpath('modpacks', slug, 'builds')).forEach(x => {
@@ -43,7 +53,12 @@ function modpack(slug) {
 }
 
 function buil(slug, build) {
-    var b = loadfile('modpacks', slug, 'builds', build+'.json');
+    try {
+        var b = loadfile('modpacks', slug, 'builds', build+'.json');
+    } catch(e) {
+        console.log(`build.json does not exist for modpack ${slug} build ${build}!`);
+        return { error: `build.json does not exist for modpack ${slug} build ${build}!` };
+    }
     var m = b.mods;
     var n = [];
     m.forEach(x => {
@@ -68,7 +83,9 @@ module.exports = {
             if (slug) {
                 if (build) {
                     if (exist('modpacks', slug, 'builds', build+'.json')) {
-                        resolve(buil(slug, build));
+                        let builddata = buil(slug, build);
+                        if(!builddata.error) resolve(builddata);
+                        else reject(builddata);
                     } else {
                         resolve({
                             error: 'Build does not exist!'
@@ -76,7 +93,9 @@ module.exports = {
                     }
                 } else {
                     if (exist('modpacks', slug)) {
-                        resolve(modpack(slug));
+                        let modpackdata = modpack(slug);
+                        if(!modpackdata.error) resolve(modpackdata);
+                        else reject(modpackdata);
                     } else {
                         resolve({
                             error: 'Modpack does not exist!'
@@ -86,7 +105,14 @@ module.exports = {
             } else {
                 var modpacks = {};
                 fs.readdirSync(getpath('modpacks')).forEach(x => {
-                    modpacks[x] = loadfile('modpacks', x, 'modpack.json')['display_name'];
+                    try {
+                        modpacks[x] = loadfile('modpacks', x, 'modpack.json')['display_name'];
+                    } catch(e) {
+                        console.error(`modpack.json does not exist for ${x}!`);
+                        reject({
+                          error: `modpack.json does not exist for ${x}!`
+                        });
+                    }
                 });
                 resolve({
                     modpacks,
@@ -110,7 +136,9 @@ module.exports = {
                     }
                 } else {
                     if (exist('mods', name)) {
-                        resolve(mod(name));
+                        let moddata = mod(name);
+                        if(!moddata.error) resolve(moddata);
+                        else reject(moddata);
                     } else {
                         resolve({
                             error: 'Mod does not exist!'
