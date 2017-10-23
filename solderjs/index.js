@@ -13,7 +13,7 @@ function mod(name) {
     try {
         var m = loadfile('mods', name, 'mod.json');
     } catch(e) {
-      console.error(`mod.json does not exist for ${name}!`);
+        console.error(`mod.json does not exist for ${name}!`);
         return { error: `mod.json does not exist for ${name}!` };
     }
     var v = [];
