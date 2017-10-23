@@ -52,13 +52,13 @@ app.get('/api/verify/:token', (req, res) => {
 
 app.get('/api/modpack', (req, res) => {
     if (req.query.include && req.query.include=='full') return promise(res, solder.modpack_full());
-    promise(res, solder.modpack());
+    promise(res, solder.modpack({}));
 });
 app.get('/api/modpack/:slug', (req, res) => {
-    promise(res, solder.modpack(req.params.slug));
+    promise(res, solder.modpack({slug: req.params.slug}));
 });
 app.get('/api/modpack/:slug/:build', (req, res) => {
-    promise(res, solder.modpack(req.params.slug, req.params.build));
+    promise(res, solder.modpack({slug: req.params.slug, build: req.params.build, include: req.query.include}));
 });
 app.get('/api/mod/:modname', (req, res) => {
     promise(res, solder.mod(req.params.modname));

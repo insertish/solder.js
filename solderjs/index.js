@@ -61,7 +61,7 @@ function modpack(slug) {
     return m;
 }
 
-function buil(slug, build) {
+function buil(slug, build, include) {
     try {
         var b = loadfile('modpacks', slug, 'builds', build+'.json');
     } catch(e) {
@@ -74,6 +74,19 @@ function buil(slug, build) {
         var ext = 'jar';
         if (exist('mods', x.name, 'versions', x.version+'.zip')) ext = 'zip';
         var v = 'mods/'+x.name+'/versions/'+x.version+'.'+ext;
+        var md5 = md5hash(config.data+v);
+        var url = config.addr+v;
+        if (include && include=='mods') {
+            try {
+                var temp = loadfile('mods', x.name, 'mod.json');
+                temp['version'] = x.version;
+                temp['md5'] = md5;
+                temp['url'] = url;
+                return n.push(temp);
+            } catch (e) {
+                // oh noes it didn't work, let's just fall back onto the other one
+            }
+        }
         n.push({
             name: x.name,
             version: x.version,
@@ -87,24 +100,15 @@ function buil(slug, build) {
 
 module.exports = {
     config,
-    modpack_full: () => {
+    modpack: (opts) => {
         return new Promise((resolve, reject) => {
-            var modpacks = {};
-            fs.readdirSync(getpath('modpacks')).forEach(x => {
-                modpacks[x] = modpack(x);
-            });
-            resolve({
-                modpacks,
-                mirror_url: 'http://mirror.technicpack.net/Technic/'
-            });
-        });
-    },
-    modpack: (slug, build) => {
-        return new Promise((resolve, reject) => {
+            var slug = opts.slug,
+                build = opts.build,
+                include = opts.include;
             if (slug) {
                 if (build) {
                     if (exist('modpacks', slug, 'builds', build+'.json')) {
-                        let builddata = buil(slug, build);
+                        let builddata = buil(slug, build, include);
                         if(!builddata.error) resolve(builddata);
                         else reject(builddata);
                     } else {
@@ -127,6 +131,7 @@ module.exports = {
                 var modpacks = {};
                 fs.readdirSync(getpath('modpacks')).forEach(x => {
                     try {
+                        if (include && include=='full') return modpacks[x] = modpack(x);
                         modpacks[x] = loadfile('modpacks', x, 'modpack.json')['display_name'];
                     } catch(e) {
                         console.error(`modpack.json does not exist for ${x}!`);
