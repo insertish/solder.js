@@ -31,14 +31,23 @@ function ver(name, version, ext) {
 function modpack(slug) {
     var m = loadfile('modpacks', slug, 'modpack.json');
     var b = [];
-    if (fs.existsSync(getpath('modpacks', slug, 'builds')))
+    if (exist('modpacks', slug, 'builds'))
         fs.readdirSync(getpath('modpacks', slug, 'builds')).forEach(x => {
             b.push(x.replace(/\.json$/g,''));
         });
     m['builds'] = b;
-    m['icon'] = config.addr + 'resources/'+slug+'/icon.png';
-    m['logo'] = config.addr + 'resources/'+slug+'/logo.png';
-    m['background'] = config.addr + 'resources/'+slug+'/background.png';
+    if (exist('modpacks', slug, 'icon.png')) {
+        m['icon'] = config.addr + 'resources/'+slug+'/icon.png';
+        m['icon_md5'] = md5hash(getpath('modpacks', slug, 'icon.png'));
+    }
+    if (exist('modpacks', slug, 'logo.png')) {
+        m['logo'] = config.addr + 'resources/'+slug+'/logo.png';
+        m['logo_md5'] = md5hash(getpath('modpacks', slug, 'logo.png'));
+    }
+    if (exist('modpacks', slug, 'background.png')) {
+        m['background'] = config.addr + 'resources/'+slug+'/background.png';
+        m['background_md5'] = md5hash(getpath('modpacks', slug, 'background.png'));
+    }
     return m;
 }
 
@@ -63,6 +72,18 @@ function buil(slug, build) {
 
 module.exports = {
     config,
+    modpack_full: () => {
+        return new Promise((resolve, reject) => {
+            var modpacks = {};
+            fs.readdirSync(getpath('modpacks')).forEach(x => {
+                modpacks[x] = modpack(x);
+            });
+            resolve({
+                modpacks,
+                mirror_url: 'http://mirror.technicpack.net/Technic/'
+            });
+        });
+    },
     modpack: (slug, build) => {
         return new Promise((resolve, reject) => {
             if (slug) {

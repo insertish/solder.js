@@ -28,4 +28,3 @@ How do I use solder.js?
 - [Configuring solder.js and Technic](https://github.com/mcrocks999/solder.js/wiki/Linking-solder.js-with-Technic)
 - [Adding mods and a modloader](https://github.com/mcrocks999/solder.js/wiki/Adding-mods-and-a-modloader)
 - [Example web server proxy configs](https://github.com/mcrocks999/solder.js/wiki/Example-web-server-proxy-configs)
-- [HELP! No modpacks appear to import!](https://github.com/mcrocks999/solder.js/wiki/HELP:-No-modpacks-appear-to-import!)
