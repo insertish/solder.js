@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>solder.js web interface</title>
+    </head>
+    <body>
+        <section class="hero is-fullheight">
+            <div class="hero-head">
+                <nav class="navbar">
+                    <div class="container">
+                        <div class="navbar-brand">
+                            <a class="navbar-item">
+                                solder.js web interface
+                            </a>
+                            <span class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </span>
+                        </div>
+                        <div class="navbar-menu">
+                            <div class="navbar-end">
+                                <span class="navbar-item">
+                                    <a href="https://github.com/mcrocks999/solder.js" class="button is-dark">
+                                        <span class="icon">
+                                            <span class="mdi mdi-github-circle"></span>
+                                        </span>
+                                        <span>GitHub</span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>    
+            <div class="hero-body">
+                <div class="container has-text-centered">
+                    <p class="title">
+                        solder.js
+                    </p>
+                    <p class="subtitle">
+                        <i>Supercharge your modpack.</i>
+                    </p>
+                    <form method="POST" action="${root}login" style="max-width:500px;margin:auto">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" type="text" placeholder="Auth token" name="token" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button type="submit" class="button is-link">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.0/css/bulma.min.css" integrity="sha256-HEtF7HLJZSC3Le1HcsWbz1hDYFPZCqDhZa9QsCgVUdw=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/2.0.46/css/materialdesignicons.min.css">
+</html>

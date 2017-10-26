@@ -30,6 +30,18 @@ const data = './data/';
 const jpp = 2;
 
 /**
+ * Solder.js Authentication Key
+ * @default 'solderjs_auth_key'
+ */
+const authkey = 'solderjs_auth_key';
+
+/**
+ * Web Interface Web Root
+ * @default /solderjs/
+ */
+const webroot = '/solderjs/';
+
+/**
  * Technic Solder API Keys
  * @default []
  */
@@ -46,6 +58,7 @@ const technic_cat = 0;
 
 module.exports = {
     api, port, addr, data, jpp,
+    authkey, webroot,
     technic_key, technic_cat,
     solder_key,
     stream: 'DEV',
