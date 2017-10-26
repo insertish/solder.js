@@ -59,17 +59,22 @@ app.get('/api/modpack/:slug', (req, res) => {
 app.get('/api/modpack/:slug/:build', (req, res) => {
     promise(res, solder.modpack({slug: req.params.slug, build: req.params.build, include: req.query.include}));
 });
+app.get('/api/mod/', (req, res) => {
+    promise(res, solder.mod({include: req.query.include}));
+});
 app.get('/api/mod/:modname', (req, res) => {
-    promise(res, solder.mod(req.params.modname));
+    promise(res, solder.mod({name: req.params.modname}));
 });
 app.get('/api/mod/:modname/:modversion', (req, res) => {
-    promise(res, solder.mod(req.params.modname, req.params.modversion));
+    promise(res, solder.mod({name: req.params.modname, ver: req.params.modversion}));
 });
 
 app.get('/api/mods/:modname/versions/:modfile', (req, res) => {
     res.send(fs.readFileSync(getpath('mods', req.params.modname, 'versions', req.params.modfile)));
 });
 app.use('/api/resources/', express.static(getpath('modpacks')));
+
+app.use('/', express.static('public'));
 
 app.listen(config.port, () => {
     console.log('solder.js listening on :'+config.port);

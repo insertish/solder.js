@@ -136,7 +136,7 @@ module.exports = {
                     } catch(e) {
                         console.error(`modpack.json does not exist for ${x}!`);
                         reject({
-                          error: `modpack.json does not exist for ${x}!`
+                            error: `modpack.json does not exist for ${x}!`
                         });
                     }
                 });
@@ -147,8 +147,11 @@ module.exports = {
             }
         });
     },
-    mod: (name, version) => {
+    mod: (opts) => {
         return new Promise((resolve, reject) => {
+            var name = opts.name,
+                version = opts.ver,
+                include = opts.include;
             if (name) {
                 if (version) {
                     if (exist('mods', name, 'versions', version+'.jar')) {
@@ -172,8 +175,20 @@ module.exports = {
                     }
                 }
             } else {
+                var mods = {};
+                fs.readdirSync(getpath('mods')).forEach(x => {
+                    try {
+                        if (include && include=='full') return mods[x] = mod(x);
+                        mods[x] = loadfile('mods', x, 'mod.json')['pretty_name'];
+                    } catch(e) {
+                        console.error(`mod.json does not exist for ${x}!`);
+                        reject({
+                            error: `mod.json does not exist for ${x}!`
+                        });
+                    }
+                });
                 resolve({
-                    error: 'No mod requested'
+                    mods
                 });
             }
         });
