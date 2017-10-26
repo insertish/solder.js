@@ -74,7 +74,7 @@ app.get('/api/mods/:modname/versions/:modfile', (req, res) => {
 });
 app.use('/api/resources/', express.static(getpath('modpacks')));
 
-app.use(config.webroot, require('./webui'));
+app.use(config.webroot, solder.webui);
 
 app.listen(config.port, () => {
     console.log('solder.js listening on :'+config.port);

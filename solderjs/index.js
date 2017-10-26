@@ -100,6 +100,7 @@ function buil(slug, build, include) {
 
 module.exports = {
     config,
+    webui: require('./webui'),
     modpack: (opts) => {
         return new Promise((resolve, reject) => {
             var slug = opts.slug,

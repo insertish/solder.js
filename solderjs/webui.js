@@ -4,8 +4,8 @@ const express = require('express'),
 
 var app = new express.Router(), config = null;
 
-if (fs.existsSync('../solderjs/dev-config.js')) config = require('../solderjs/dev-config');
-else config = require('../solderjs/config');
+if (fs.existsSync('./dev-config.js')) config = require('./dev-config');
+else config = require('./config');
 
 app.use(cookieParser(config.cookie));
 app.use(express.urlencoded({extended: true}));
