@@ -42,6 +42,12 @@ const authkey = 'solderjs_auth_key';
 const webroot = '/solderjs/';
 
 /**
+ * Signed Cookie Secret
+ * @default 'signedcookiesecretsolderjs'
+ */
+const cookie = 'signedcookiesecretsolderjs';
+
+/**
  * Technic Solder API Keys
  * @default []
  */
@@ -58,7 +64,7 @@ const technic_cat = 0;
 
 module.exports = {
     api, port, addr, data, jpp,
-    authkey, webroot,
+    authkey, cookie, webroot,
     technic_key, technic_cat,
     solder_key,
     stream: 'DEV',
