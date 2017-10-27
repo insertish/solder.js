@@ -19,7 +19,7 @@ function mod(name) {
     var v = [];
     if (fs.existsSync(getpath('mods', name, 'versions')))
         fs.readdirSync(getpath('mods', name, 'versions')).forEach(x => {
-            v.push(x.replace(/\.jar$|\.zip$/g,''));
+            v.push(x.replace(/\.jar$|\.zip$|\.json$/g,''));
         });
     m['versions'] = v;
     if (!m['donate']) m['donate'] = null;
@@ -27,11 +27,15 @@ function mod(name) {
 }
 
 function ver(name, version, ext) {
-    var v = 'mods/'+name+'/versions/'+version+'.'+ext;
-    return {
-        md5: md5hash(config.data+v),
-        url: config.addr+v
-    };
+    if (ext=='json') {
+        return loadfile('mods', name, 'versions', version+'.json');
+    } else {
+        var v = 'mods/'+name+'/versions/'+version+'.'+ext;
+        return {
+            md5: md5hash(config.data+v),
+            url: config.addr+v
+        };
+    }
 }
 
 function modpack(slug) {
@@ -74,6 +78,7 @@ function buil(slug, build, include) {
     m.forEach(x => {
         var ext = 'jar';
         if (exist('mods', x.name, 'versions', x.version+'.zip')) ext = 'zip';
+        if (exist('mods', x.name, 'versions', x.version+'.json')) ext = 'json';
         var v = 'mods/'+x.name+'/versions/'+x.version+'.'+ext;
         var md5 = md5hash(config.data+v);
         var url = config.addr+v;
@@ -160,6 +165,8 @@ module.exports = {
                         resolve(ver(name, version, 'jar'));
                     } else if (exist('mods', name, 'versions', version+'.zip')) {
                         resolve(ver(name, version, 'zip'));
+                    } else if (exist('mods', name, 'versions', version+'.json')) {
+                        resolve(ver(name, version, 'json'));
                     } else {
                         resolve({
                             error: 'Mod version does not exist!'
