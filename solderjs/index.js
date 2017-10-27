@@ -22,6 +22,7 @@ function mod(name) {
             v.push(x.replace(/\.jar$|\.zip$/g,''));
         });
     m['versions'] = v;
+    if (!m['donate']) m['donate'] = null;
     return m;
 }
 
