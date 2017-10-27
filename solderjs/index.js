@@ -70,8 +70,8 @@ function buil(slug, build, include) {
     try {
         var b = loadfile('modpacks', slug, 'builds', build+'.json');
     } catch(e) {
-        console.log(`build.json does not exist for modpack ${slug} build ${build}!`);
-        return { error: `build.json does not exist for modpack ${slug} build ${build}!` };
+        console.log(`${slug} build ${build} couldn't be parsed or doesn't exist!`);
+        return { error: `${slug} build ${build} couldn't be parsed or doesn't exist!` };
     }
     var m = b.mods;
     var n = [];
@@ -80,8 +80,15 @@ function buil(slug, build, include) {
         if (exist('mods', x.name, 'versions', x.version+'.zip')) ext = 'zip';
         if (exist('mods', x.name, 'versions', x.version+'.json')) ext = 'json';
         var v = 'mods/'+x.name+'/versions/'+x.version+'.'+ext;
-        var md5 = md5hash(config.data+v);
-        var url = config.addr+v;
+        var md5, url;
+        if(ext === 'json') {
+            var temp = loadfile('mods', x.name, 'versions', x.version + '.json'); // We know that the file exists due to the exist check, so no try needed
+            md5 = temp.md5;
+            url = temp.url;
+        } else {
+            md5 = md5hash(config.data+v);
+            url = config.addr+v;
+        }
         if (include && include=='mods') {
             try {
                 var temp = loadfile('mods', x.name, 'mod.json');
