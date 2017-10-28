@@ -22,6 +22,9 @@ function mod(name) {
             v.push(x.replace(/\.jar$|\.zip$|\.json$/g,''));
         });
     m['versions'] = v;
+    if (!m['author']) m['author'] = null;
+    if (!m['description']) m['description'] = null;
+    if (!m['link']) m['link'] = null;
     if (!m['donate']) m['donate'] = null;
     return m;
 }
@@ -54,25 +57,41 @@ function modpack(slug) {
     if (exist('modpacks', slug, 'icon.png')) {
         m['icon'] = config.addr + 'resources/'+slug+'/icon.png';
         m['icon_md5'] = md5hash(getpath('modpacks', slug, 'icon.png'));
+    } else {
+        m['icon'] = null;
+        m['icon_md5'] = null;
     }
     if (exist('modpacks', slug, 'logo.png')) {
         m['logo'] = config.addr + 'resources/'+slug+'/logo.png';
         m['logo_md5'] = md5hash(getpath('modpacks', slug, 'logo.png'));
+    } else {
+        m['logo'] = null;
+        m['logo_md5'] = null;
     }
     if (exist('modpacks', slug, 'background.png')) {
         m['background'] = config.addr + 'resources/'+slug+'/background.png';
         m['background_md5'] = md5hash(getpath('modpacks', slug, 'background.png'));
+    } else {
+        m['background'] = null;
+        m['background_md5'] = null;
     }
     return m;
 }
 
 function buil(slug, build, include) {
     try {
-        var b = loadfile('modpacks', slug, 'builds', build+'.json');
+        var b = loadfile('modpacks', slug, 'builds', build + '.json');
     } catch(e) {
-        console.log(`${slug} build ${build} couldn't be parsed or doesn't exist!`);
-        return { error: `${slug} build ${build} couldn't be parsed or doesn't exist!` };
+        if(exist('modpacks', slug, 'builds', build + '.json')) {
+            console.log(`${slug} build ${build} couldn't be loaded properly!`);
+            return { error: `${slug} build ${build} couldn't be loaded properly!` };
+        } else {
+            return { error: `Build doesn't exist!` };
+        }
     }
+    if(!b['forge']) b['forge'] = null;
+    if(!b['java']) b['java'] = null;
+    if(!b['memory']) b['memory'] = null;
     var m = b.mods;
     var n = [];
     m.forEach(x => {
@@ -92,6 +111,10 @@ function buil(slug, build, include) {
         if (include && include=='mods') {
             try {
                 var temp = loadfile('mods', x.name, 'mod.json');
+                if (!temp['author']) temp['author'] = null;
+                if (!temp['description']) temp['description'] = null;
+                if (!temp['link']) temp['link'] = null;
+                if (!temp['donate']) temp['donate'] = null;
                 temp['version'] = x.version;
                 temp['md5'] = md5;
                 temp['url'] = url;
@@ -103,8 +126,8 @@ function buil(slug, build, include) {
         n.push({
             name: x.name,
             version: x.version,
-            md5: md5hash(config.data+v),
-            url: config.addr+v
+            md5: md5,
+            url: url
         });
     });
     b['mods'] = n;

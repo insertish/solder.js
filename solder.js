@@ -24,8 +24,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(config.webroot, solder.webui);
-
 if(config.webroot != "" && config.webroot !== "/") app.get('/', (req, res) => {
     res.send(config.api+' // '+config.ver);
 });
@@ -75,6 +73,8 @@ app.get('/api/mods/:modname/versions/:modfile', (req, res) => {
     res.send(fs.readFileSync(getpath('mods', req.params.modname, 'versions', req.params.modfile)));
 });
 app.use('/api/resources/', express.static(getpath('modpacks')));
+
+app.use(config.webroot, solder.webui);
 
 app.listen(config.port, () => {
     console.log('solder.js listening on :'+config.port);
